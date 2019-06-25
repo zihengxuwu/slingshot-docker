@@ -46,7 +46,13 @@ RUN Rscript -e 'install.packages("BiocManager", repos = "http://cran.us.r-projec
 ## BiocManager for installing bioconductor packages
 RUN echo "BiocManager::install(c(\"devtools\", \"remotes\", \"clusterExperiment\", \"drisso/fletcher2017data\", \"optparse\", \"logging\"), dependencies=TRUE)" > ${SRC}/install_pkgs.R  && \
     echo "BiocManager::install(\"slingshot\", INSTALL_opts = c(\"--install-tests\"))" >> ${SRC}/install_pkgs.R && \
+    echo "BiocManager::install(\"BiocGenerics\", \"DelayedArray\", \"DelayedMatrixStats\", \"limma\", \"S4Vectors\", \"SingleCellExperiment\", \"SummarizedExperiment\"))" >> ${SRC}/install_pkgs.R && \
     Rscript ${SRC}/install_pkgs.R
+    
+## Install more monocle3 specific packages
+RUN Rscript -e 'install.packages("reticulate")'
+    Rscript -e 'reticulate::py_install("louvain")'
+    Rscript -e 'devtools::install_github('cole-trapnell-lab/monocle3')'
 
 ##############
 ## Install wrapper script
