@@ -50,9 +50,7 @@ RUN echo "BiocManager::install(c(\"devtools\", \"remotes\", \"clusterExperiment\
     Rscript ${SRC}/install_pkgs.R
     
 ## Install more monocle3 specific packages
-RUN Rscript -e 'install.packages("reticulate")'
-    Rscript -e 'reticulate::py_install("louvain")'
-    Rscript -e 'devtools::install_github('cole-trapnell-lab/monocle3')'
+RUN Rscript -e 'devtools::install_github('cole-trapnell-lab/monocle3')'
 
 ##############
 ## Install wrapper script
